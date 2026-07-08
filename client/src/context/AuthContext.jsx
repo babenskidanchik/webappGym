@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
-const API_URL = "https://webappgym.onrender.com";
+const API_URL = "/api";
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);

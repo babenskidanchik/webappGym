@@ -49,7 +49,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		Secure:   true,
 		Path:     "/",
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 		MaxAge:   24 * 60 * 60,
 	})
 
@@ -93,7 +93,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		Secure:   true,
 		Path:     "/",
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 		MaxAge:   24 * 60 * 60,
 	})
 
@@ -167,7 +167,7 @@ func (h *Handler) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   -1,
 		HttpOnly: true,
 		Secure:   true,
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 	})
 
 	w.Header().Set("Context-Type", "application/json")

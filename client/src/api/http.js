@@ -1,8 +1,8 @@
-const API_URL = "https://webappgym.onrender.com";
+const API_URL = "/api";
 
 export default async function http(path, options = {}) {
     console.log("API:", API_URL + path);
-    
+
     const res = await fetch(API_URL + path, {
         ...options,
         headers: {
