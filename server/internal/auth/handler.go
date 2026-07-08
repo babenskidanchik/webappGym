@@ -2,10 +2,9 @@ package auth
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 )
-
-var secret = []byte("SECRET_KEY")
 
 type Handler struct {
 	Service *Service
@@ -58,18 +57,29 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
-// login handler
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var req LoginRequest
-	json.NewDecoder(r.Body).Decode(&req)
+
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		log.Println("JSON ERROR:", err)
+		http.Error(w, "bad request", 400)
+		return
+	}
+
+	log.Println("LOGIN ATTEMPT:", req.Email)
 
 	user, err := h.Service.Login(req.Email, req.Password)
+
 	if err != nil {
+		log.Println("LOGIN FAILED:", err)
 		http.Error(w, "invalid email or password", http.StatusUnauthorized)
 		return
 	}
+
+	log.Println("LOGIN SUCCESS:", user.Email)
 
 	token, err := GenerateJWT(user)
 	if err != nil {
@@ -156,6 +166,8 @@ func (h *Handler) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		MaxAge:   -1,
 		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteNoneMode,
 	})
 
 	w.Header().Set("Context-Type", "application/json")
