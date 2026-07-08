@@ -58,9 +58,9 @@ func main() {
 
 	// public routes
 	mux.HandleFunc("/health", healthHandler)
-	mux.HandleFunc("/register", auth.AuthMiddleware(handler.Register))
-	mux.HandleFunc("/login", auth.AuthMiddleware(handler.Login))
-	mux.HandleFunc("/logout", auth.AuthMiddleware(handler.LogoutHandler))
+	mux.HandleFunc("/register", handler.Register)
+	mux.HandleFunc("/login", handler.Login)
+	mux.HandleFunc("/logout", handler.LogoutHandler)
 
 	// protected routes
 	mux.HandleFunc("/profile", auth.AuthMiddleware(handler.Profile))
