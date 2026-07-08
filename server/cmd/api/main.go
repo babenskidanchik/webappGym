@@ -68,7 +68,7 @@ func main() {
 	mux.HandleFunc("/membership/buy", auth.AuthMiddleware(handler.BuyMembership))
 
 	//react
-	mux.Handle("/", http.FileServer(http.Dir("./dist")))
+	mux.Handle("/", http.FileServer(http.Dir(".server/dist")))
 
 	// wrap with CORS middleware
 	server := corsMiddleware(mux)
