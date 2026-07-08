@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Response struct {
@@ -29,7 +30,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 func corsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+		w.Header().Set("Access-Control-Allow_Origin", config.FrontendURL)
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		w.Header().Set("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
@@ -69,6 +70,11 @@ func main() {
 	// wrap with CORS middleware
 	server := corsMiddleware(mux)
 
-	log.Println("Server is running on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", server))
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Fatal(http.ListenAndServe(":"+port, server))
 }

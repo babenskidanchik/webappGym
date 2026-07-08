@@ -3,6 +3,8 @@ package database
 import (
 	"log"
 
+	"GYM/server/internal/config"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
@@ -10,13 +12,22 @@ import (
 var DB *sqlx.DB
 
 func Connect() {
-	dsn := "host=localhost port=5432 user=gym password=gym123 dbname=gym_app sslmode=disable"
 
-	db, err := sqlx.Connect("postgres", dsn)
+	db, err := sqlx.Connect(
+		"postgres",
+		config.DatabaseURL,
+	)
+
 	if err != nil {
-		log.Fatalf("Failed to connect to the database: %v", err)
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatalf("Database ping failed: %v", err)
 	}
 
 	DB = db
-	log.Println("Connected to the database successfully")
+
+	log.Println("Connected to database successfully")
 }

@@ -48,8 +48,9 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		Name:     "token",
 		Value:    token,
 		HttpOnly: true,
+		Secure:   true,
 		Path:     "/",
-		SameSite: http.SameSiteLaxMode,
+		SameSite: http.SameSiteNoneMode,
 		MaxAge:   24 * 60 * 60,
 	})
 
@@ -80,8 +81,9 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		Name:     "token",
 		Value:    token,
 		HttpOnly: true,
+		Secure:   true,
 		Path:     "/",
-		SameSite: http.SameSiteLaxMode,
+		SameSite: http.SameSiteNoneMode,
 		MaxAge:   24 * 60 * 60,
 	})
 
