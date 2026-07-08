@@ -1,4 +1,4 @@
-import http from "./http";
+import http from "./https";
 
 export const register = (data) =>
   http("/register", {
@@ -28,4 +28,3 @@ export const logout = () =>
     method: "POST",
   });
 
-  
