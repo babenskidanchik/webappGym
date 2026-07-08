@@ -48,7 +48,6 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		Value:    token,
 		HttpOnly: true,
 		Secure:   true,
-		Domain:   "webappgym.onrender.com",
 		Path:     "/",
 		SameSite: http.SameSiteNoneMode,
 		MaxAge:   24 * 60 * 60,
@@ -93,7 +92,6 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		Value:    token,
 		HttpOnly: true,
 		Secure:   true,
-		Domain:   "webappgym.onrender.com",
 		Path:     "/",
 		SameSite: http.SameSiteNoneMode,
 		MaxAge:   24 * 60 * 60,
@@ -168,7 +166,6 @@ func (h *Handler) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		MaxAge:   -1,
 		HttpOnly: true,
-		Domain:   "webappgym.onrender.com",
 		Secure:   true,
 		SameSite: http.SameSiteNoneMode,
 	})
