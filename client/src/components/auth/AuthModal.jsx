@@ -22,7 +22,8 @@ export default function AuthModal({ onClose }) {
 
             onClose();
         } catch (e) {
-            console.log("AUTH ERROR:", e);
+            alert("AUTH ERROR: " + e.message);
+            console.error("AUTH ERROR:", e);
         } finally {
             setLoading(false);
         }
