@@ -3,6 +3,7 @@ package auth
 import (
 	"database/sql"
 	"errors"
+	"log"
 )
 
 type Service struct {
@@ -53,12 +54,22 @@ func (s *Service) Register(req RegisterRequest) (User, error) {
 }
 
 func (s *Service) Login(email, password string) (User, error) {
+
 	user, err := s.Repo.GetUserByEmail(email)
+
 	if err != nil {
+		log.Println("LOGIN USER ERROR:", err)
 		return User{}, errors.New("invalid email or password")
 	}
 
-	if !CheckPasswordHash(password, user.PasswordHash) {
+	log.Println("FOUND USER:", user.Email)
+	log.Println("HASH FROM DB:", user.PasswordHash)
+
+	ok := CheckPasswordHash(password, user.PasswordHash)
+
+	log.Println("PASSWORD OK:", ok)
+
+	if !ok {
 		return User{}, errors.New("invalid email or password")
 	}
 
